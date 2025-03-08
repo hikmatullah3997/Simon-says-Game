@@ -7,13 +7,20 @@
  let level=0;
  let h2=document.querySelector("h2");
  let levelcount=0;
- 
+
+ const bgMusic = document.getElementById('backgroundMusic');
+ const gameOverSound = document.getElementById('gameOverSound');
+
+  
  document.addEventListener("keypress",function(){
  
     if(start==false){
         console.log("Game has started");
        
         start=true;
+        bgMusic.volume = 0.5;
+        bgMusic.currentTime = 0;
+        bgMusic.play();
         levelUp();
     }
    
@@ -48,25 +55,34 @@ function userFlash(btn){
     console.log(gameseq);
     gameFlash(randbtn);
  }
+
+
+ 
  function checkAns(index){
-    // console.log("current level",level)
-     
+    const overlay = document.querySelector('.game-overlay');
     if(userseq[index] === gameseq[index]){
         if(userseq.length == gameseq.length){
           setTimeout(levelUp,1000);
-        }
+        } 
     }else{
+        bgMusic.pause();
+        gameOverSound.currentTime = 5.9;
+        gameOverSound.play();
+        
+        overlay.style.backgroundImage = 'url("scaryimg.jpeg")';
+        overlay.style.display = 'block';
         h2.innerHTML= `Game over: <b> Your score was ${level}<b> <br>  press any key to start`;
-        document.querySelector("body").style.backgroundColor="red";
+       
         let h3=document.querySelector("h3");
         if(level>levelcount){
             levelcount=level;
             h3.innerText=`your higgest score was ${levelcount}`;
         }
-        setTimeout(function(){
-        document.querySelector("body").style.backgroundColor="white";
-       
-        },150)
+        setTimeout(() => { 
+            overlay.style.display = 'none';
+            // Stop game over sound after 3 seconds
+            setTimeout(() => gameOverSound.pause(), 1500);
+        }, 1500);
         reset();
     }
  }
@@ -94,6 +110,7 @@ function userFlash(btn){
     userseq=[];
 
    
+    bgMusic.pause();
     
    
     level=0; 
