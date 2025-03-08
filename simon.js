@@ -18,7 +18,6 @@
         console.log("Game has started");
        
         start=true;
-        bgMusic.volume = 0.5;
         bgMusic.currentTime = 0;
         bgMusic.play();
         levelUp();
@@ -66,6 +65,8 @@ function userFlash(btn){
         } 
     }else{
         bgMusic.pause();
+
+        overlay.style.backgroundImage = 'url("scaryimg.jpeg")';
         gameOverSound.currentTime = 5.9;
         gameOverSound.play();
         
