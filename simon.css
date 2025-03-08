@@ -18,6 +18,12 @@ body{
   margin:0.5rem;
   border-radius: 2rem;
 }
+@media (max-width: 670px) {
+    .box-container{
+        flex-direction: column;
+        width: 100%;
+    }
+}
 .red{
     background-color: rgb(166, 39, 117);
 }
