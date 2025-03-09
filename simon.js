@@ -12,18 +12,21 @@
  const gameOverSound = document.getElementById('gameOverSound');
 
   
- document.addEventListener("keypress",function(){
- 
-    if(start==false){
-        console.log("Game has started");
-       
-        start=true;
+ // Handle both keyboard and touch events
+document.addEventListener("keypress", handleStart);
+document.addEventListener("touchstart", handleStart);
+
+function handleStart(e) {
+    // Prevent default touch behavior (zooming/scrolling)
+    if(e.type === 'touchstart') e.preventDefault();
+    
+    if(!start) {
+        start = true;
         bgMusic.currentTime = 0;
         bgMusic.play();
         levelUp();
     }
-   
- });
+}
 
 function gameFlash(btn){
     btn.classList.add("flash");
@@ -72,7 +75,7 @@ function userFlash(btn){
         
         overlay.style.backgroundImage = 'url("scaryimg.jpeg")';
         overlay.style.display = 'block';
-        h2.innerHTML= `Game over: <b> Your score was ${level}<b> <br>  press any key to start`;
+        h2.innerHTML= `Game over: <b> Your score was ${level}<b> <br>  press any key to start or touch to start`;
        
         let h3=document.querySelector("h3");
         if(level>levelcount){
